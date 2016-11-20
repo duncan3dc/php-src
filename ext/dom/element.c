@@ -259,19 +259,6 @@ int dom_element_tag_name_read(dom_object *obj, zval *retval)
 
 /* }}} */
 
-/* {{{ schemaTypeInfo	typeinfo
-readonly=yes
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#Element-schemaTypeInfo
-Since: DOM Level 3
-*/
-int dom_element_schema_type_info_read(dom_object *obj, zval *retval)
-{
-	ZVAL_NULL(retval);
-	return SUCCESS;
-}
-
-/* }}} */
-
 static xmlNodePtr dom_get_dom1_attribute(xmlNodePtr elem, xmlChar *name) /* {{{ */
 {
     int len;

@@ -78,8 +78,6 @@ object(DOMText)#%d (19) {
 object(DOMElement)#%d (18) {
   ["tagName"]=>
   string(5) "form1"
-  ["schemaTypeInfo"]=>
-  NULL
   ["nodeName"]=>
   string(5) "form1"
   ["nodeValue"]=>

@@ -206,20 +206,6 @@ int dom_attr_owner_element_read(dom_object *obj, zval *retval)
 
 /* }}} */
 
-/* {{{ schemaTypeInfo	DOMTypeInfo
-readonly=yes
-URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#Attr-schemaTypeInfo
-Since: DOM Level 3
-*/
-int dom_attr_schema_type_info_read(dom_object *obj, zval *retval)
-{
-	/* TODO */
-	ZVAL_NULL(retval);
-	return SUCCESS;
-}
-
-/* }}} */
-
 /* {{{ proto boolean dom_attr_is_id()
 URL: http://www.w3.org/TR/2003/WD-DOM-Level-3-Core-20030226/DOM3-Core.html#Attr-isId
 Since: DOM Level 3
