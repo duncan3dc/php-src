@@ -59,7 +59,7 @@ before_script:
 
 # Run PHPs run-tests.php
 script:
-    - ./sapi/cli/php run-tests.php -p `pwd`/sapi/cli/php -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --set-timeout 120
+    - ./sapi/cli/php run-tests.php -p `pwd`/sapi/cli/php -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --set-timeout 120 ext/pgsql/tests
 
 after_success:
     - ccache --show-stats
