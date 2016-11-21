@@ -18,7 +18,7 @@ addons:
       - libt1-dev
 
 notifications:
-    email: 
+    email:
        on_failure: change
     irc:
       template:
@@ -41,9 +41,8 @@ env:
       - PDO_MYSQL_TEST_PASS=
       - PDO_MYSQL_TEST_HOST=127.0.0.1
       - REPORT_EXIT_STATUS=1
-    matrix:
-      - ENABLE_MAINTAINER_ZTS=0 ENABLE_DEBUG=0
-      - ENABLE_MAINTAINER_ZTS=1 ENABLE_DEBUG=1
+      - ENABLE_MAINTAINER_ZTS=0
+      - ENABLE_DEBUG=0
 
 before_script:
     - ccache --version
@@ -58,9 +57,9 @@ before_script:
     - . ./travis/ext/pgsql/setup.sh
     - . ./travis/ext/pdo_pgsql/setup.sh
 
-# Run PHPs run-tests.php 
+# Run PHPs run-tests.php
 script:
-    - ./sapi/cli/php run-tests.php -p `pwd`/sapi/cli/php $(if [ $ENABLE_DEBUG == 1 ]; then echo "-d opcache.enable_cli=1 -d zend_extension=`pwd`/modules/opcache.so"; fi) -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --set-timeout 120
+    - ./sapi/cli/php run-tests.php -p `pwd`/sapi/cli/php -g "FAIL,XFAIL,BORK,WARN,LEAK,SKIP" --offline --show-diff --set-timeout 120
 
 after_success:
     - ccache --show-stats
