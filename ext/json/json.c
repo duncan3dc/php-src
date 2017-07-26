@@ -228,6 +228,10 @@ PHP_JSON_API int php_json_encode_ex(smart_str *buf, zval *val, int options, zend
 	return_code = php_json_encode_zval(buf, val, options, &encoder);
 	JSON_G(error_code) = encoder.error_code;
 
+	if (encoder.error_code != PHP_JSON_ERROR_NONE) {
+		php_error_docref(NULL, E_WARNING, php_json_last_error_msg());
+	}
+
 	return return_code;
 }
 /* }}} */
@@ -246,6 +250,7 @@ PHP_JSON_API int php_json_decode_ex(zval *return_value, char *str, size_t str_le
 
 	if (php_json_yyparse(&parser)) {
 		JSON_G(error_code) = php_json_parser_error_code(&parser);
+		php_error_docref(NULL, E_WARNING, php_json_last_error_msg());
 		RETVAL_NULL();
 		return FAILURE;
 	}
@@ -276,9 +281,13 @@ static PHP_FUNCTION(json_encode)
 	php_json_encode_zval(&buf, parameter, (int)options, &encoder);
 	JSON_G(error_code) = encoder.error_code;
 
-	if (encoder.error_code != PHP_JSON_ERROR_NONE && !(options & PHP_JSON_PARTIAL_OUTPUT_ON_ERROR)) {
-		smart_str_free(&buf);
-		RETURN_FALSE;
+	if (encoder.error_code != PHP_JSON_ERROR_NONE) {
+		php_error_docref(NULL, E_WARNING, php_json_last_error_msg());
+
+		if (!(options & PHP_JSON_PARTIAL_OUTPUT_ON_ERROR)) {
+			smart_str_free(&buf);
+			RETURN_FALSE;
+		}
 	}
 
 	smart_str_0(&buf); /* copy? */
@@ -312,6 +321,7 @@ static PHP_FUNCTION(json_decode)
 
 	if (!str_len) {
 		JSON_G(error_code) = PHP_JSON_ERROR_SYNTAX;
+		php_error_docref(NULL, E_WARNING, php_json_last_error_msg());
 		RETURN_NULL();
 	}
 
