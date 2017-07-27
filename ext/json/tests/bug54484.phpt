@@ -19,9 +19,17 @@ var_dump(json_last_error());
 json_decode("");
 var_dump(json_last_error());
 ?>
---EXPECT--
+--EXPECTF--
 int(0)
+
+Warning: json_decode(): Syntax error in %s on line %d
 int(4)
+
+Warning: json_decode(): Syntax error in %s on line %d
 int(4)
+
+Warning: json_decode(): Control character error, possibly incorrectly encoded in %s on line %d
 int(3)
+
+Warning: json_decode(): Syntax error in %s on line %d
 int(4)

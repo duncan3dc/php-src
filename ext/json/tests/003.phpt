@@ -31,10 +31,14 @@ array(1) {
   }
 }
 
+
+Warning: json_encode(): Recursion detected in %s on line %d
 bool(false)
 int(6)
 string(%d) "Recursion detected"
 
+
+Warning: json_encode(): Recursion detected in %s on line %d
 string(6) "[null]"
 int(6)
 string(%d) "Recursion detected"

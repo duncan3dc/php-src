@@ -14,7 +14,12 @@ var_dump(
 	json_decode(json_encode('""'))
 );
 ?>
---EXPECT--
+--EXPECTF--
+Warning: json_decode(): Syntax error in %s on line %d
+
+Warning: json_decode(): Control character error, possibly incorrectly encoded in %s on line %d
+
+Warning: json_decode(): Syntax error in %s on line %d
 string(0) ""
 NULL
 NULL

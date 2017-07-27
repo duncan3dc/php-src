@@ -24,16 +24,23 @@ var_dump(json_last_error(), json_last_error_msg());
 
 ?>
 --EXPECTF--
+Warning: json_encode(): Malformed UTF-8 characters, possibly incorrectly encoded in %s on line %d
 bool(false)
 int(5)
 string(56) "Malformed UTF-8 characters, possibly incorrectly encoded"
+
+Warning: json_encode(): Malformed UTF-8 characters, possibly incorrectly encoded in %s on line %d
 string(4) "null"
 int(5)
 string(56) "Malformed UTF-8 characters, possibly incorrectly encoded"
 
+
+Warning: json_encode(): Malformed UTF-8 characters, possibly incorrectly encoded in %s on line %d
 bool(false)
 int(5)
 string(56) "Malformed UTF-8 characters, possibly incorrectly encoded"
+
+Warning: json_encode(): Malformed UTF-8 characters, possibly incorrectly encoded in %s on line %d
 string(4) "null"
 int(5)
 string(56) "Malformed UTF-8 characters, possibly incorrectly encoded"

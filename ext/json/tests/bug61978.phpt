@@ -38,6 +38,9 @@ var_dump(json_encode($obj2, JSON_PARTIAL_OUTPUT_ON_ERROR));
 
 ?>
 --EXPECTF--
+Warning: json_encode(): Recursion detected in %s on line %d
 string(24) "{"test":"123","me":null}"
 ==
+
+Warning: json_encode(): Recursion detected in %s on line %d
 string(24) "{"test":"123","me":null}"

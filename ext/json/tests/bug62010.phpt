@@ -10,6 +10,7 @@ var_dump(json_last_error() === JSON_ERROR_UTF16);
 var_dump(json_last_error_msg());
 ?>
 --EXPECTF--
+Warning: json_decode(): Single unpaired UTF-16 surrogate in unicode escape in %s on line %d
 NULL
 bool(true)
 string(50) "Single unpaired UTF-16 surrogate in unicode escape"

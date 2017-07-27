@@ -28,10 +28,14 @@ object(stdClass)#%d (1) {
   *RECURSION*
 }
 
+
+Warning: json_encode(): Recursion detected in %s on line %d
 bool(false)
 int(6)
 string(%d) "Recursion detected"
 
+
+Warning: json_encode(): Recursion detected in %s on line %d
 string(13) "{"prop":null}"
 int(6)
 string(%d) "Recursion detected"

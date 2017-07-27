@@ -14,7 +14,13 @@ echo "Done\n";
 ?>
 --EXPECTF--
 string(5) ""abc""
+
+Warning: json_encode(): Malformed UTF-8 characters, possibly incorrectly encoded in %s on line %d
 bool(false)
+
+Warning: json_encode(): Malformed UTF-8 characters, possibly incorrectly encoded in %s on line %d
 string(4) "null"
+
+Warning: json_encode(): Malformed UTF-8 characters, possibly incorrectly encoded in %s on line %d
 string(17) "[null,null,"abc"]"
 Done

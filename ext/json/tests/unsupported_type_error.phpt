@@ -18,9 +18,13 @@ var_dump(json_last_error(), json_last_error_msg());
 ?>
 --EXPECTF--
 resource(%d) of type (stream)
+
+Warning: json_encode(): Type is not supported in %s on line %d
 bool(false)
 int(8)
 string(21) "Type is not supported"
+
+Warning: json_encode(): Type is not supported in %s on line %d
 string(4) "null"
 int(8)
 string(21) "Type is not supported"

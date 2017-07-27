@@ -28,15 +28,35 @@ var_dump(json_decode('{ "": "": "" } }'));
 --EXPECTF--
 Warning: json_decode() expects at least 1 parameter, 0 given in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
 object(stdClass)#%d (1) {
   ["test"]=>
@@ -66,6 +86,10 @@ object(stdClass)#%d (1) {
     string(0) ""
   }
 }
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
+
+Warning: json_decode(): Syntax error in %s on line %d
 NULL
 ===DONE===
