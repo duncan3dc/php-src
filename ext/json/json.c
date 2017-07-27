@@ -186,6 +186,37 @@ static PHP_MINFO_FUNCTION(json)
 }
 /* }}} */
 
+PHP_JSON_API char *php_json_last_error_msg() /* {{{ */
+{
+	switch(JSON_G(error_code)) {
+		case PHP_JSON_ERROR_NONE:
+			return "No error";
+		case PHP_JSON_ERROR_DEPTH:
+			return "Maximum stack depth exceeded";
+		case PHP_JSON_ERROR_STATE_MISMATCH:
+			return "State mismatch (invalid or malformed JSON)";
+		case PHP_JSON_ERROR_CTRL_CHAR:
+			return "Control character error, possibly incorrectly encoded";
+		case PHP_JSON_ERROR_SYNTAX:
+			return "Syntax error";
+		case PHP_JSON_ERROR_UTF8:
+			return "Malformed UTF-8 characters, possibly incorrectly encoded";
+		case PHP_JSON_ERROR_RECURSION:
+			return "Recursion detected";
+		case PHP_JSON_ERROR_INF_OR_NAN:
+			return "Inf and NaN cannot be JSON encoded";
+		case PHP_JSON_ERROR_UNSUPPORTED_TYPE:
+			return "Type is not supported";
+		case PHP_JSON_ERROR_INVALID_PROPERTY_NAME:
+			return "The decoded property name is invalid";
+		case PHP_JSON_ERROR_UTF16:
+			return "Single unpaired UTF-16 surrogate in unicode escape";
+	}
+
+	return "Unknown error";
+}
+/* }}} */
+
 PHP_JSON_API int php_json_encode_ex(smart_str *buf, zval *val, int options, zend_long depth) /* {{{ */
 {
 	php_json_encoder encoder;
@@ -327,33 +358,7 @@ static PHP_FUNCTION(json_last_error_msg)
 		return;
 	}
 
-	switch(JSON_G(error_code)) {
-		case PHP_JSON_ERROR_NONE:
-			RETURN_STRING("No error");
-		case PHP_JSON_ERROR_DEPTH:
-			RETURN_STRING("Maximum stack depth exceeded");
-		case PHP_JSON_ERROR_STATE_MISMATCH:
-			RETURN_STRING("State mismatch (invalid or malformed JSON)");
-		case PHP_JSON_ERROR_CTRL_CHAR:
-			RETURN_STRING("Control character error, possibly incorrectly encoded");
-		case PHP_JSON_ERROR_SYNTAX:
-			RETURN_STRING("Syntax error");
-		case PHP_JSON_ERROR_UTF8:
-			RETURN_STRING("Malformed UTF-8 characters, possibly incorrectly encoded");
-		case PHP_JSON_ERROR_RECURSION:
-			RETURN_STRING("Recursion detected");
-		case PHP_JSON_ERROR_INF_OR_NAN:
-			RETURN_STRING("Inf and NaN cannot be JSON encoded");
-		case PHP_JSON_ERROR_UNSUPPORTED_TYPE:
-			RETURN_STRING("Type is not supported");
-		case PHP_JSON_ERROR_INVALID_PROPERTY_NAME:
-			RETURN_STRING("The decoded property name is invalid");
-		case PHP_JSON_ERROR_UTF16:
-			RETURN_STRING("Single unpaired UTF-16 surrogate in unicode escape");
-		default:
-			RETURN_STRING("Unknown error");
-	}
-
+	RETURN_STRING(php_json_last_error_msg());
 }
 /* }}} */
 
