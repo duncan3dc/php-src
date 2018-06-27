@@ -6055,6 +6055,61 @@ PHP_FUNCTION(array_filter)
 }
 /* }}} */
 
+PHPAPI int iterator_to_array(zval *obj, zval *array)
+{
+    zend_object_iterator *iter;
+    zend_class_entry *ce = Z_OBJCE_P(obj);
+
+    iter = ce->get_iterator(ce, obj, 0);
+
+    if (EG(exception)) {
+        goto done;
+    }
+
+    iter->index = 0;
+    if (iter->funcs->rewind) {
+        iter->funcs->rewind(iter);
+        if (EG(exception)) {
+            goto done;
+        }
+    }
+
+    while (iter->funcs->valid(iter) == SUCCESS) {
+        if (EG(exception)) {
+            goto done;
+        }
+
+        // Get the next value from the iterator
+        zval *data;
+        data = iter->funcs->get_current_data(iter);
+        if (EG(exception)) {
+            goto done;
+        }
+        if (data == NULL) {
+            goto done;
+        }
+        if (Z_REFCOUNTED_P(data)) {
+            Z_ADDREF_P(data);
+        }
+
+        // Add the value on to the return array
+		add_next_index_zval(array, data);
+
+        // Move on to the next item in the iterator
+        iter->index++;
+        iter->funcs->move_forward(iter);
+        if (EG(exception)) {
+            goto done;
+        }
+    }
+
+    done:
+    if (iter) {
+        zend_iterator_dtor(iter);
+    }
+    return EG(exception) ? FAILURE : SUCCESS;
+}
+
 /* {{{ proto array array_map(mixed callback, array input1 [, array input2 ,...])
    Applies the callback to the elements in given arrays. */
 PHP_FUNCTION(array_map)
