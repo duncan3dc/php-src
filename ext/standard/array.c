@@ -6116,7 +6116,7 @@ PHP_FUNCTION(array_map)
 {
 	zval *arrays = NULL;
 	int n_arrays = 0;
-	zval result;
+	zval result, array;
 	zend_fcall_info fci = empty_fcall_info;
 	zend_fcall_info_cache fci_cache = empty_fcall_info_cache;
 	int i;
@@ -6134,6 +6134,13 @@ PHP_FUNCTION(array_map)
 		zend_string *str_key;
 		zval *zv, arg;
 		int ret;
+
+		if (Z_TYPE(arrays[0]) == IS_OBJECT && instanceof_function(Z_OBJCE(arrays[0]), zend_ce_traversable)) {
+			array_init(&array);
+			iterator_to_array(&arrays[0], &array);
+			zval_ptr_dtor(&arrays[0]);
+			arrays[0] = array;
+		}
 
 		if (Z_TYPE(arrays[0]) != IS_ARRAY) {
 			php_error_docref(NULL, E_WARNING, "Argument #%d should be an array", 2);
@@ -6172,6 +6179,12 @@ PHP_FUNCTION(array_map)
 		uint32_t *array_pos = (HashPosition *)ecalloc(n_arrays, sizeof(HashPosition));
 
 		for (i = 0; i < n_arrays; i++) {
+			if (Z_TYPE(arrays[i]) == IS_OBJECT && instanceof_function(Z_OBJCE(arrays[i]), zend_ce_traversable)) {
+				array_init(&array);
+				iterator_to_array(&arrays[i], &array);
+				zval_ptr_dtor(&arrays[i]);
+				arrays[i] = array;
+			}
 			if (Z_TYPE(arrays[i]) != IS_ARRAY) {
 				php_error_docref(NULL, E_WARNING, "Argument #%d should be an array", i + 2);
 				efree(array_pos);
