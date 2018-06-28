@@ -6342,12 +6342,12 @@ PHP_FUNCTION(array_chunk)
 	zend_string *str_key;
 	zend_ulong num_key;
 	zend_bool preserve_keys = 0;
-	zval *input = NULL;
+	zval *input = NULL, array;
 	zval chunk;
 	zval *entry;
 
 	ZEND_PARSE_PARAMETERS_START(2, 3)
-		Z_PARAM_ARRAY(input)
+		Z_PARAM_ARRAY_OR_OBJECT_EX(input, 0, 0)
 		Z_PARAM_LONG(size)
 		Z_PARAM_OPTIONAL
 		Z_PARAM_BOOL(preserve_keys)
@@ -6357,6 +6357,13 @@ PHP_FUNCTION(array_chunk)
 	if (size < 1) {
 		php_error_docref(NULL, E_WARNING, "Size parameter expected to be greater than 0");
 		return;
+	}
+
+	if (Z_TYPE_P(input) == IS_OBJECT && instanceof_function(Z_OBJCE_P(input), zend_ce_traversable)) {
+		array_init(&array);
+		iterator_to_array(input, &array);
+		zval_ptr_dtor(input);
+		input = &array;
 	}
 
 	num_in = zend_hash_num_elements(Z_ARRVAL_P(input));
@@ -6399,6 +6406,9 @@ PHP_FUNCTION(array_chunk)
 	if (Z_TYPE(chunk) != IS_UNDEF) {
 		add_next_index_zval(return_value, &chunk);
 	}
+
+	zval_ptr_dtor(input);
+	zval_ptr_dtor(&array);
 }
 /* }}} */
 
