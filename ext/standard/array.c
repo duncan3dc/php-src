@@ -6283,13 +6283,31 @@ PHP_FUNCTION(array_map)
    Checks if the given key or index exists in the array */
 PHP_FUNCTION(array_key_exists)
 {
-	zval *key;					/* key to check for */
-	HashTable *array;			/* array to check in */
+	zval *key, *input;
 
 	ZEND_PARSE_PARAMETERS_START(2, 2)
 		Z_PARAM_ZVAL(key)
-		Z_PARAM_ARRAY_OR_OBJECT_HT(array)
+		Z_PARAM_ARRAY_OR_OBJECT_EX(input, 0, 0)
 	ZEND_PARSE_PARAMETERS_END();
+
+	if (Z_TYPE_P(input) == IS_OBJECT) {
+		zend_class_entry *ce = Z_OBJCE_P(input);
+		if (instanceof_function(ce, zend_ce_arrayaccess)) {
+			zval rv;
+			zend_call_method_with_1_params(input, ce, NULL, "offsetexists", &rv, key);
+			zval_ptr_dtor(key);
+			if (!Z_ISUNDEF(rv)) {
+				zend_bool result = zend_is_true(&rv);
+				zval_ptr_dtor(&rv);
+				if (result) {
+					RETURN_TRUE;
+				}
+			}
+			RETURN_FALSE;
+		}
+	}
+
+	HashTable *array = HASH_OF(input);
 
 	switch (Z_TYPE_P(key)) {
 		case IS_STRING:
