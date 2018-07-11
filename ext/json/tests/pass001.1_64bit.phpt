@@ -171,7 +171,7 @@ array(14) {
   [0]=>
   string(23) "JSON Test Pattern pass1"
   [1]=>
-  object(stdClass)#%d (1) {
+  object(JsonData)#%d (1) {
     ["object with 1 member"]=>
     array(1) {
       [0]=>
@@ -179,7 +179,7 @@ array(14) {
     }
   }
   [2]=>
-  object(stdClass)#%d (0) {
+  object(JsonData)#%d (0) {
   }
   [3]=>
   array(0) {
@@ -193,7 +193,7 @@ array(14) {
   [7]=>
   NULL
   [8]=>
-  object(stdClass)#%d (36) {
+  object(JsonData)#%d (36) {
     ["integer"]=>
     int(1234567890)
     ["real"]=>
@@ -247,14 +247,14 @@ array(14) {
     array(0) {
     }
     ["object"]=>
-    object(stdClass)#%d (0) {
+    object(JsonData)#%d (0) {
     }
     ["123"]=>
-    object(stdClass)#%d (1) {
+    object(JsonData)#%d (1) {
       ["456"]=>
-      object(stdClass)#%d (1) {
+      object(JsonData)#%d (1) {
         ["abc"]=>
-        object(stdClass)#%d (3) {
+        object(JsonData)#%d (3) {
           ["789"]=>
           string(3) "def"
           ["012"]=>
@@ -533,7 +533,7 @@ array(14) {
   [0]=>
   string(23) "JSON Test Pattern pass1"
   [1]=>
-  object(stdClass)#%d (1) {
+  object(JsonData)#%d (1) {
     ["object with 1 member"]=>
     array(1) {
       [0]=>
@@ -541,7 +541,7 @@ array(14) {
     }
   }
   [2]=>
-  object(stdClass)#%d (0) {
+  object(JsonData)#%d (0) {
   }
   [3]=>
   array(0) {
@@ -555,7 +555,7 @@ array(14) {
   [7]=>
   NULL
   [8]=>
-  object(stdClass)#%d (36) {
+  object(JsonData)#%d (36) {
     ["integer"]=>
     int(1234567890)
     ["real"]=>
@@ -609,14 +609,14 @@ array(14) {
     array(0) {
     }
     ["object"]=>
-    object(stdClass)#%d (0) {
+    object(JsonData)#%d (0) {
     }
     ["123"]=>
-    object(stdClass)#%d (1) {
+    object(JsonData)#%d (1) {
       ["456"]=>
-      object(stdClass)#%d (1) {
+      object(JsonData)#%d (1) {
         ["abc"]=>
-        object(stdClass)#%d (3) {
+        object(JsonData)#%d (3) {
           ["789"]=>
           string(3) "def"
           ["012"]=>
