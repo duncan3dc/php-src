@@ -106,6 +106,7 @@ static PHP_MINIT_FUNCTION(json)
 	INIT_CLASS_ENTRY(ce, "JsonData", json_data_class_entry);
 	ce.create_object = json_object_new;
 	php_json_data_ce = zend_register_internal_class_ex(&ce, zend_standard_class_def);
+	zend_class_implements(php_json_data_ce, 1, zend_ce_traversable);
 
 	INIT_CLASS_ENTRY(ce, "JsonSerializable", json_serializable_interface);
 	php_json_serializable_ce = zend_register_internal_interface(&ce);
