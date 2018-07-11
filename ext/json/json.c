@@ -37,6 +37,10 @@ static PHP_FUNCTION(json_decode);
 static PHP_FUNCTION(json_last_error);
 static PHP_FUNCTION(json_last_error_msg);
 
+static php_json_object* php_json_object_new(zend_class_entry *ce);
+
+PHPAPI zend_class_entry *php_json_data_ce;
+
 PHP_JSON_API zend_class_entry *php_json_serializable_ce;
 
 PHP_JSON_API ZEND_DECLARE_MODULE_GLOBALS(json)
@@ -87,10 +91,21 @@ static const zend_function_entry json_serializable_interface[] = {
 #define PHP_JSON_REGISTER_CONSTANT(_name, _value) \
 	REGISTER_LONG_CONSTANT(_name,  _value, CONST_CS | CONST_PERSISTENT);
 
+/* the method table */
+/* each method can have its own parameters and visibility */
+static const zend_function_entry json_data_class_entry[] = { /* {{{ */
+	PHP_FE_END
+};
+/* }}} */
+
 /* {{{ MINIT */
 static PHP_MINIT_FUNCTION(json)
 {
 	zend_class_entry ce;
+
+	INIT_CLASS_ENTRY(ce, "JsonData", json_data_class_entry);
+	ce.create_object = json_object_new;
+	php_json_data_ce = zend_register_internal_class_ex(&ce, zend_standard_class_def);
 
 	INIT_CLASS_ENTRY(ce, "JsonSerializable", json_serializable_interface);
 	php_json_serializable_ce = zend_register_internal_interface(&ce);
@@ -354,6 +369,33 @@ static PHP_FUNCTION(json_last_error_msg)
 			RETURN_STRING("Unknown error");
 	}
 
+}
+/* }}} */
+
+/* {{{ php_json_object_new()
+ */
+static php_json_object* php_json_object_new(zend_class_entry *ce)
+{
+	php_json_object *intern;
+
+	intern = ecalloc(1, sizeof(php_json_object) + zend_object_properties_size(ce));
+
+	zend_object_std_init(&intern->zo, ce);
+	object_properties_init(&intern->zo, ce);
+	//intern->zo.handlers = &sxe_object_handlers;
+
+	return intern;
+}
+/* }}} */
+
+/* {{{ json_object_new()
+ */
+PHP_JSON_API zend_object *
+json_object_new(zend_class_entry *ce)
+{
+	php_json_object *intern;
+	intern = php_json_object_new(ce);
+	return &intern->zo;
 }
 /* }}} */
 

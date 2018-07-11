@@ -1870,7 +1870,7 @@ static int php_json_parser_object_create(php_json_parser *parser, zval *object)
 	if (parser->scanner.options & PHP_JSON_OBJECT_AS_ARRAY) {
 		return array_init(object);
 	} else {
-		return object_init(object);
+		return object_init_ex(object, php_json_data_ce);
 	}
 }
 

@@ -36,6 +36,7 @@ extern zend_module_entry json_module_entry;
 #include "TSRM.h"
 #endif
 
+extern PHP_JSON_API zend_class_entry *php_json_data_ce;
 extern PHP_JSON_API zend_class_entry *php_json_serializable_ce;
 
 /* error codes */
@@ -52,6 +53,14 @@ typedef enum {
 	PHP_JSON_ERROR_INVALID_PROPERTY_NAME,
 	PHP_JSON_ERROR_UTF16
 } php_json_error_code;
+
+typedef struct {
+	HashTable *properties;
+	zval tmp;
+	zend_object zo;
+} php_json_object;
+
+PHP_JSON_API zend_object *json_object_new(zend_class_entry *ce);
 
 /* json_decode() options */
 #define PHP_JSON_OBJECT_AS_ARRAY            (1<<0)
