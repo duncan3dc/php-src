@@ -18,7 +18,7 @@ $phar->setInfoClass('SplFileObject');
 
 $phar['f.php'] = 'hi';
 var_dump(isset($phar['f.php']));
-echo $phar['f.php'];
+echo $phar['f.php']->fgets();
 echo "\n";
 $md5 = md5_file($fname);
 unset($phar['f.php']);

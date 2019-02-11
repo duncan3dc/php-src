@@ -18,7 +18,7 @@ $phar->setInfoClass('SplFileObject');
 
 $phar['f.php'] = 'hi';
 var_dump(isset($phar['f.php']));
-echo $phar['f.php'];
+echo $phar['f.php']->fgets();
 echo "\n";
 unset($phar['f.php']);
 var_dump(isset($phar['f.php']));
